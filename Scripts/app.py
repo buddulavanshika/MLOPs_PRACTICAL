@@ -5,8 +5,8 @@ import os
 from helper_functions import log_info, log_error
 
 # Define paths
-ARTIFACTS_PATH = r"C:\Users\Admin\Documents\1BM22AI034_MLOPS\Practical\Artifacts"
-DATA_OUTPUT_PATH = r"C:\Users\Admin\Documents\1BM22AI034_MLOPS\Practical\Data\output"
+ARTIFACTS_PATH = r"C:\Users\Vanshika\Desktop\6th sem\mlops\practical\MLOPs_PRACTICAL\Artifacts"
+DATA_OUTPUT_PATH = r"C:\Users\Vanshika\Desktop\6th sem\mlops\practical\MLOPs_PRACTICAL\Data\output"
 os.makedirs(DATA_OUTPUT_PATH, exist_ok=True)
 MODEL_PATH = os.path.join(ARTIFACTS_PATH, "best_classifier.pkl")
 PIPELINE_PATH = os.path.join(ARTIFACTS_PATH, "data_processing_pipeline.pkl")
