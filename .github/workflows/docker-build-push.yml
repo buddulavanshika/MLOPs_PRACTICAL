@@ -21,8 +21,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t buddulavanshika/loan-risk-app-slim:latest .
+          docker build -t buddulavanshika/loan-risk-app:latest .
 
       - name: Push Docker Image
         run: |
-          docker push buddulavanshika/loan-risk-app-slim:latest
+          docker push buddulavanshika/loan-risk-app:latest

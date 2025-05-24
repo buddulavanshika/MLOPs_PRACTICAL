@@ -1,16 +1,29 @@
+
 import streamlit as st
 import pandas as pd
 import pickle
 import os
+from dotenv import load_dotenv
 from helper_functions import log_info, log_error
+# import shap  # SHAP Explainability
+# from lime.lime_tabular import LimeTabularExplainer  # LIME Explainability
 
-# Define paths
-ARTIFACTS_PATH = r"C:\Users\Vanshika\Desktop\6th sem\mlops\practical\MLOPs_PRACTICAL\Artifacts"
-DATA_OUTPUT_PATH = r"C:\Users\Vanshika\Desktop\6th sem\mlops\practical\MLOPs_PRACTICAL\Data\output"
-os.makedirs(DATA_OUTPUT_PATH, exist_ok=True)
-MODEL_PATH = os.path.join(ARTIFACTS_PATH, "best_classifier.pkl")
-PIPELINE_PATH = os.path.join(ARTIFACTS_PATH, "data_processing_pipeline.pkl")
-LABEL_ENCODER_PATH = os.path.join(ARTIFACTS_PATH, "label_encoder.pkl")
+# Load environment variables
+load_dotenv()
+
+# Define base paths dynamically
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+ARTIFACTS_DIR = os.path.join(BASE_DIR, os.getenv('ARTIFACTS_DIR'))
+DATA_OUTPUT_DIR = os.path.join(BASE_DIR, os.getenv('DATA_DIR'), "output")
+
+# Ensure output directory exists
+os.makedirs(DATA_OUTPUT_DIR, exist_ok=True)
+
+# Define model and artifacts paths
+MODEL_PATH = os.path.join(ARTIFACTS_DIR, "best_classifier.pkl")
+PIPELINE_PATH = os.path.join(ARTIFACTS_DIR, "data_processing_pipeline.pkl")
+LABEL_ENCODER_PATH = os.path.join(ARTIFACTS_DIR, "label_encoder.pkl")
 
 def load_artifact(filepath):
     """
@@ -71,7 +84,6 @@ if page == "Single Prediction":
             st.success(f"Predicted Risk Category: {prediction}")
             log_info(f"Predicted Risk Category: {prediction}")
             
-
 elif page == "Batch Prediction":
     st.header("Batch Prediction")
     uploaded_file = st.file_uploader("Upload CSV for Batch Prediction", type=["csv"])
@@ -88,7 +100,7 @@ elif page == "Batch Prediction":
             df['Predicted Risk Category'] = label_encoder.inverse_transform(predictions)
             
             # Save the batch predictions to the output folder
-            output_file = os.path.join(DATA_OUTPUT_PATH, "batch_predictions.csv")
+            output_file = os.path.join(DATA_OUTPUT_DIR, "batch_predictions.csv")
             df.to_csv(output_file, index=False)
             
             st.write(df)
